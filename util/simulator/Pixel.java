@@ -1,6 +1,11 @@
 package util.simulator;
 
-public class Pixel {
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JComponent;
+
+public class Pixel extends JComponent {
     private int r, g, b = 0;
 
     // Getters and Setters
@@ -69,9 +74,9 @@ public class Pixel {
 
     // Constructors
     /**
-     * @see This is the default constructor for Pixel, and will initialize to
-     *      #FFFFFF. Unless you feel like flashbanging yourself, you probably don't
-     *      want to use this.
+     * This is the default constructor for Pixel, and will initialize to
+     * #FFFFFF. Unless you feel like flashbanging yourself, you probably don't
+     * want to use this.
      */
     public Pixel() {
         r = 255;
@@ -92,14 +97,23 @@ public class Pixel {
 
     /**
      * 
-     * @param HexCode for color of pixel as a string, including leading hashtag.
+     * @param HexCode represents color of pixel as a string, *including* leading
+     *                hashtag.
      *                (Ex: #00AAE0)
+     * 
+     * 
      */
     public Pixel(String hexCode) {
         hexCode.trim();
-        this.setRed(Integer.parseInt(hexCode.substring(1, 3), 16));
-        this.setGreen(Integer.parseInt(hexCode.substring(3, 5), 16));
-        this.setBlue(Integer.parseInt(hexCode.substring(5, 7), 16));
+        try {
+            this.setRed(Integer.parseInt(hexCode.substring(1, 3), 16));
+            this.setGreen(Integer.parseInt(hexCode.substring(3, 5), 16));
+            this.setBlue(Integer.parseInt(hexCode.substring(5, 7), 16));
+        } catch (StringIndexOutOfBoundsException e) {
+            this.setRed(Integer.parseInt(hexCode.substring(0, 2), 16));
+            this.setGreen(Integer.parseInt(hexCode.substring(2, 4), 16));
+            this.setBlue(Integer.parseInt(hexCode.substring(4, 6), 16));
+        }
     }
 
     /**
@@ -124,6 +138,20 @@ public class Pixel {
         return rtrn;
     }
 
+    // Actually useful functions from here on out, offering new ways to change
+    // colors.
+    public void add(Pixel other) {
+        setRed(other.getRed() + this.r);
+        setGreen(other.getGreen() + this.g);
+        setBlue(other.getBlue() + this.b);
+    }
+
+    public void subtract(Pixel other) {
+        setRed(other.getRed() - this.r);
+        setGreen(other.getGreen() - this.g);
+        setBlue(other.getBlue() - this.b);
+    }
+
     // Debug stuff here on out. All likely to be removed.
 
     /**
@@ -131,12 +159,36 @@ public class Pixel {
      * @return this Pixel's color data in a "Pretty Printing" friendly format.
      * 
      */
-    public String reprString() {
+    public String toString() {
         String rtrn = "";
-        rtrn += "R: " + this.r + "\n";
-        rtrn += "G: " + this.g + "\n";
+        rtrn += "R: " + this.r + " ";
+        rtrn += "G: " + this.g + " ";
         rtrn += "B: " + this.b + "\n";
         rtrn += "HEX: " + this.getHexString() + "\n";
         return rtrn;
     }
+
+    // JAVA SWING STUFF
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(new Color(this.r, this.g, this.b));
+        g.fillRect(0, 0, getWidth(), getHeight());
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(10, 10);
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return getPreferredSize();
+    }
+
 }
