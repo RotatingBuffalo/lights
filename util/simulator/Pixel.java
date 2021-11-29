@@ -79,6 +79,7 @@ public class Pixel extends JComponent {
      * want to use this.
      */
     public Pixel() {
+        super();
         r = 255;
         g = 255;
         b = 255;
@@ -90,6 +91,7 @@ public class Pixel extends JComponent {
      * @param blue  (0-255)
      */
     public Pixel(int r, int g, int b) {
+        super();
         this.setRed(r);
         this.setGreen(g);
         this.setBlue(b);
@@ -169,11 +171,15 @@ public class Pixel extends JComponent {
     }
 
     // JAVA SWING STUFF
+
     @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(new Color(this.r, this.g, this.b));
-        g.fillRect(0, 0, getWidth(), getHeight());
+    public int getWidth() {
+        return 10;
+    }
+
+    @Override
+    public int getHeight() {
+        return 10;
     }
 
     @Override
@@ -189,6 +195,13 @@ public class Pixel extends JComponent {
     @Override
     public Dimension getMinimumSize() {
         return getPreferredSize();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(new Color(this.r, this.g, this.b));
+        g.fillRect(0, 0, getWidth(), getHeight());
     }
 
 }
