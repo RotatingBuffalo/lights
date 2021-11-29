@@ -3,16 +3,16 @@ package util.simulator;
 import javax.swing.*;
 
 public class Window {
-    private static Matrix frame = new Matrix("Matrix LED Simulator");
+    private Matrix frame = new Matrix("Matrix LED Simulator");
 
-    public static void spawnWindow() {
+    public void update(Pixel[][] grid) {
+        frame.Repaint(grid);
+    }
+
+    public void spawnWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static Matrix getMatrix() {
-        return frame;
     }
 }

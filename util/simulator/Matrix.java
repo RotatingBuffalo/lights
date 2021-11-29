@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.security.InvalidParameterException;
 
 public class Matrix extends JFrame {
     private JPanel gridPanel = new JPanel(new GridLayout(32, 32, 5, 5));
@@ -31,6 +32,37 @@ public class Matrix extends JFrame {
                 gridPanel.add(grid[i][j]);
             }
         }
+        super.repaint();
+    }
+
+    /**
+     * Updates the Matrix's frame to the passed in pixel grid.
+     * 
+     * @param pixelGrid 32x32 array of Pixels.
+     * @throws InvalidParameterException if pixel grid is not 32x32
+     */
+    public void Repaint(Pixel[][] pixelGrid) {
+        if (pixelGrid.length != 32) {
+            throw new InvalidParameterException("Pixel grid was not 32x32.");
+        }
+        gridPanel.removeAll();
+        gridPanel.setBackground(Color.BLACK);
+        for (int i = 0; i < 32; i++) {
+            if (pixelGrid[i].length != 32) {
+                throw new InvalidParameterException("Pixel grid was not 32x32.");
+            }
+            for (int j = 0; j < 32; j++) {
+                gridPanel.add(pixelGrid[i][j]);
+                System.out
+                        .println("Just added a pixel at ( " + i + ", " + j + "). Should be this color:\n"
+                                + pixelGrid[i][j]);
+            }
+        }
+        System.out.println("Pixel at 0,0:\n" + pixelGrid[0][0]);
+        System.out.println("Pixel at 15,15:\n" + pixelGrid[15][15]);
+        gridPanel.revalidate();
+        repaint();
+
     }
 
     /**
@@ -62,7 +94,7 @@ public class Matrix extends JFrame {
     }
 
     public Pixel getPixel(int x, int y) {
-        return (Pixel) gridPanel.findComponentAt(x, y);
+        return grid[x][y];
     }
 
     public void setPixel(int x, int y, Pixel p) {
