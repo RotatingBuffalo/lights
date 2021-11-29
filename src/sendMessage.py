@@ -20,10 +20,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         i = 0
         while True:
             i = i + math.pi/15
-            r = int(max(min((math.sin(i) * 255), 255), 0))
-            b = int(max(min((math.sin(i+math.pi/2) * 255), 255), 0))
-            g = int(max(min((math.sin(i + math.pi) * 255), 255), 0))
+            r = int(max(min(((math.sin(i)) * 255), 255), 0))
+            b = int(max(min(((math.sin(i+(2*math.pi)/3)) * 255), 255), 0))
+            g = int(max(min(((math.sin(i + (4*math.pi)/3)) * 255), 255), 0))
             framecolor = "#%02x%02x%02x;" % (r, g, b)
             frame = framecolor * 1024
             conn.send(('{' + frame + '}\n').encode())
-            sleep(1.0/15.0)
+            sleep(1.0/10.0)
