@@ -17,7 +17,7 @@ public class SocketListener {
         // System.out.println("Message received:" + receivedHexCodes[0]);
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
-                rtrn[i][j] = new Pixel(receivedHexCodes[(i * j) + j]);
+                rtrn[i][j] = new Pixel(receivedHexCodes[32 * i + j]);
             }
         }
         // System.out.println("Setting grid to: " + rtrn[15][31]);
