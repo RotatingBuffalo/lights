@@ -4,6 +4,7 @@ namespace lights.src
 {
     class Program
     {
+        private static Server s = new Server();
         private static int FrameCounter = 0;
         public static void ResetCounter()
         {
@@ -19,23 +20,22 @@ namespace lights.src
         }
         public static void Main(string[] args)
         {
-            Server s = new Server();
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(Shutdown);
             Console.WriteLine("Attempting to connect!");
             s.Connect();
             Console.WriteLine("Connected! (supposedly, anyway.)");
-            Console.WriteLine("Now running : Algo.HueFade");
-            s.SetAlgorithm(Algo.HueFade);
-            s.Run(5);
-            Console.WriteLine("Now running : Algo.RGBFade");
-            s.SetAlgorithm(Algo.RGBFade);
-            s.Run(5);
-            Console.WriteLine("Now running : Algo.RGBWave");
-            s.SetAlgorithm(Algo.RGBWave);
-            s.Run(10);
+            Console.WriteLine("Now running : Algo.HueWave");
+            s.SetAlgorithm(Algo.HueWave);
+            s.Run(60);
 
             Console.WriteLine("Closing connection now!");
             s.Close();
             Console.WriteLine("Done!");
+        }
+        protected static void Shutdown(object? sender, ConsoleCancelEventArgs args)
+        {
+            s.Close();
+            Console.WriteLine("\nCtrl+C Received. Shutting down.");
         }
     }
 }

@@ -4,7 +4,7 @@ namespace lights.src.Graphics
     class Algo
     {
         public delegate Frame Algorithm(Frame input);
-        public static Frame HueFade(Frame f)
+        public static Frame RGBFade(Frame f)
         {
             double i = Program.GetFrameCount() * Math.PI / 15;
             int r = (int)Math.Max(Math.Min(Math.Sin(i) * 255, 255), 0);
@@ -12,7 +12,7 @@ namespace lights.src.Graphics
             int b = (int)Math.Max(Math.Min(Math.Sin(i + (4 * (Math.PI / 3))) * 255, 255), 0);
             return new Frame(new Color(r, g, b));
         }
-        public static Frame RGBFade(Frame f)
+        public static Frame HueFade(Frame f)
         {
             int r = 0, g = 0, b = 0;
             int i = Program.GetFrameCount() * 17;
@@ -35,7 +35,7 @@ namespace lights.src.Graphics
             }
             return new Frame(new Color(r, g, b));
         }
-        public static Frame RGBWave(Frame f)
+        public static Frame HueWave(Frame f)
         {
             Color[,] rtrn = new Color[32, 32];
             for (int j = 0; j < 32; j++)

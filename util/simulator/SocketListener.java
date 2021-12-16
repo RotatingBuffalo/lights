@@ -27,14 +27,16 @@ public class SocketListener {
     }
 
     public void startConnection() {
-        System.out.println("Listening on port 12000");
+
         try {
             ss = new ServerSocket(12000);
             clientSocket = ss.accept();
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
+
         }
+        System.out.println("Listening on port 12000");
     }
 
     public void listen() {
@@ -43,6 +45,7 @@ public class SocketListener {
             try {
                 inputLine = in.readLine();
             } catch (IOException e) {
+                System.out.println("Listening on port 12000");
                 e.printStackTrace();
             }
             if (inputLine == null) {

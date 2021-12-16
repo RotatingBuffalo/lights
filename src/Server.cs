@@ -1,3 +1,5 @@
+using System.Net.WebSockets;
+using System.Net.Http;
 using System.Diagnostics;
 using lights.src.Graphics;
 using System.Net;
@@ -44,6 +46,7 @@ namespace lights.src
         }
         public void Close()
         {
+            sock.Send(System.Text.Encoding.ASCII.GetBytes(",\n"));
             sock.Shutdown(SocketShutdown.Both);
             sock.Close();
         }
