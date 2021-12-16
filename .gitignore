@@ -1,2 +1,7 @@
 **.class
 __pycache__/
+.idea/
+src/bin/
+src/.idea/
+src/obj/
+Folder.DotSettings.user

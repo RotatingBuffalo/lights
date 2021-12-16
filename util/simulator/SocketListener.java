@@ -3,9 +3,11 @@ package util.simulator;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SocketListener {
+    private ServerSocket ss;
     private Socket clientSocket;
     private BufferedReader in;
 
@@ -27,24 +29,54 @@ public class SocketListener {
     public void startConnection() {
         System.out.println("Listening on port 12000");
         try {
-            clientSocket = new Socket("127.0.0.1", 12000);
+            ss = new ServerSocket(12000);
+            clientSocket = ss.accept();
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void listen() {
         String inputLine = "";
-        try {
-            while ((inputLine = in.readLine()) != null) {
-                if (".".equals((inputLine))) {
-                    System.out.println("Killswitch received. Goodbye!");
-                    break;
-                } else {
-                    App.w.update(parseFrameBuffer(inputLine));
-                }
+        while (!clientSocket.isClosed()) {
+            try {
+                inputLine = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            System.err.println("try catch try catch java is pain");
-            e.printStackTrace();
+            if (inputLine == null) {
+                try {
+                    Thread.sleep(33L);
+                } catch (InterruptedException e) {
+                    stopConnection();
+                }
+                continue;
+            }
+            if (",".equals(inputLine)) {
+                try {
+                    Thread.sleep(25L);
+                } catch (InterruptedException ie) {
+                    ie.printStackTrace();
+                }
+                System.out.println("Connection Lost... Awaiting new connection.");
+                App.w.update();
+                stopConnection();
+                startConnection();
+                listen();
+            }
+            if (".".equals((inputLine))) {
+                System.out.println("Killswitch received. Goodbye!");
+                break;
+            } else {
+                App.w.update(parseFrameBuffer(inputLine));
+            }
+        }
+        if (clientSocket.isClosed()) {
+            System.out.println("clientSocket was closed?");
+            stopConnection();
+            startConnection();
+            listen();
         }
     }
 
@@ -52,6 +84,7 @@ public class SocketListener {
         try {
             in.close();
             clientSocket.close();
+            ss.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

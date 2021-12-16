@@ -5,8 +5,13 @@ public class App {
 
     public static void main(String args[]) {
         w.spawnWindow();
-        SocketListener sl = new SocketListener();
-        sl.startConnection();
-
+        SocketListenerThread sl = new SocketListenerThread();
+        sl.setName("SocketListener");
+        sl.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                sl.interrupt();
+            }
+        }));
     }
 }
