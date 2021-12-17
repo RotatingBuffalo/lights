@@ -5,6 +5,6 @@
 
 ***DONE! Implemented in Java, using a socket listener to take in new pixel data.***
 
->probably do the complex graphical algorithms all in python *first* and then switch to a higher performance native compiled language like C++ or Rust
-
+>~~probably do the complex graphical algorithms all in python *first* and then switch to a higher performance native compiled language like C++ or Rust~~
+***I have instead elected to use C#, something of an awkward middle ground. If I really do need to change it over to C++, it _probably_ won't be that difficult. Right?***
 >final goal is to have some form of audio visualizer, probably linking cava and rendering visuals at a very low resolution?
