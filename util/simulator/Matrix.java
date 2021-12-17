@@ -45,14 +45,8 @@ public class Matrix extends JFrame {
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
                 gridPanel.add(pixelGrid[i][j]);
-                // System.ou
-                // .println("Just added a pixel at ( " + i + ", " + j + "). Should be this
-                // color:\n"
-                // + pixelGrid[i][j]);
             }
         }
-        // System.out.println("Pixel at 0,0:\n" + pixelGrid[0][0]);
-        // System.out.println("Pixel at 15,15:\n" + pixelGrid[15][15]);
         gridPanel.revalidate();
         repaint();
 

@@ -24,13 +24,23 @@ namespace lights.src
             Console.WriteLine("Attempting to connect!");
             s.Connect();
             Console.WriteLine("Connected! (supposedly, anyway.)");
-            Console.WriteLine("Now running : Algo.HueWave");
-            s.SetAlgorithm(Algo.HueWave);
-            s.Run(60);
+            while (true)
+            {
+                Console.WriteLine("Now running : Algo.RGBFade");
+                Console.WriteLine("(Ctrl^C to exit.)");
+                s.SetAlgorithm(Algo.RGBFade);
+                s.Run(10);
 
-            Console.WriteLine("Closing connection now!");
-            s.Close();
-            Console.WriteLine("Done!");
+                Console.WriteLine("Now running : Algo.HueFade");
+                Console.WriteLine("(Ctrl^C to exit.)");
+                s.SetAlgorithm(Algo.HueFade);
+                s.Run(10);
+
+                Console.WriteLine("Now running : Algo.HueWave");
+                Console.WriteLine("(Ctrl^C to exit.)");
+                s.SetAlgorithm(Algo.HueWave);
+                s.Run(10);
+            }
         }
         protected static void Shutdown(object? sender, ConsoleCancelEventArgs args)
         {

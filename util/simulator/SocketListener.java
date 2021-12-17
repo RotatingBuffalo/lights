@@ -14,15 +14,12 @@ public class SocketListener {
     public Pixel[][] parseFrameBuffer(String socketMessage) {
         socketMessage = socketMessage.substring(socketMessage.indexOf('{') + 1, socketMessage.indexOf('}'));
         String[] receivedHexCodes = socketMessage.split(";", 0);
-        // System.out.println("Number of colors parsed: " + receivedHexCodes.length);
         Pixel[][] rtrn = new Pixel[32][32];
-        // System.out.println("Message received:" + receivedHexCodes[0]);
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
                 rtrn[i][j] = new Pixel(receivedHexCodes[32 * i + j]);
             }
         }
-        // System.out.println("Setting grid to: " + rtrn[15][31]);
         return rtrn;
     }
 
