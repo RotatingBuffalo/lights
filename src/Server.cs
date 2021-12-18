@@ -56,12 +56,13 @@ namespace lights.src
             s.Start();
             while (s.ElapsedMilliseconds < seconds * 1000)
             {
-                // This line is a bit of a doozy, but it just sends the frame data as a stream of ASCII encoded bytes.
                 f = currentAlgorithm(f);
+                // This line is a bit of a doozy, but it just sends the frame data as a stream of ASCII encoded bytes.
                 sock.Send(System.Text.Encoding.ASCII.GetBytes(f.ToString()));
                 Program.IncrementCounter();
-                //This should sleep for a 20th of a second, enabling a 20fps stream of frames.
-                Thread.Sleep((int)(1000 / 20));
+                // This should sleep for a 20th of a second, enabling a 20fps stream of frames.
+                // I know there's better ways to do this, but eh.
+                Thread.Sleep(1000 / 20);
             }
         }
     }

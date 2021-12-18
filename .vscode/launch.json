@@ -8,6 +8,12 @@
             "mainClass": "${file}"
         },
         {
+            "type": "java",
+            "name": "Run util.simulator.App",
+            "request": "launch",
+            "mainClass": "${workspaceFolder}/util/simulator/App.java"
+        },
+        {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
@@ -27,6 +33,15 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "FullTestRun",
+            "configurations": [
+                "Run util.simulator.App",
+                ".NET Core Launch (console)"
+            ]
         }
     ]
 }
